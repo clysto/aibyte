@@ -1,65 +1,52 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import style from '../styles/home.module.css';
 
 export default function Home() {
+  const data = [
+    {
+      title: '数据',
+      subtitle: 'Data',
+      img: '/slides/1.jpg',
+    },
+    {
+      title: '智能',
+      subtitle: 'Intelligence',
+      img: '/slides/2.jpg',
+    },
+    {
+      title: '工程',
+      subtitle: 'Engineering',
+      img: '/slides/3.jpg',
+    },
+    {
+      title: '通讯',
+      subtitle: 'Communication',
+      img: '/slides/4.jpg',
+    },
+  ];
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
+    <div>
+      <Swiper
+        spaceBetween={0}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        className="h-screen"
+        loop
+      >
+        {data.map((slide) => (
+          <SwiperSlide
+            key={slide.title}
+            style={{ backgroundImage: `url(${slide.img})` }}
+            className="bg-cover bg-center flex items-center justify-center"
           >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+            <div className="text-white font-bold text-shadow">
+              <div className="text-9xl">{slide.title}</div>
+              <div className="text-6xl">{slide.subtitle}</div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
-  )
+  );
 }
