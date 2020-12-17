@@ -71,6 +71,11 @@ export async function getStaticProps({ params: { slug } }) {
     }
   }
 
+  if (routeSelf.redirect) {
+    const redirectSlug = routeSelf.redirect.split('/').filter((s) => s);
+    return await getStaticProps({ params: { slug: redirectSlug } });
+  }
+
   return {
     props: {
       slug,
