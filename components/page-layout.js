@@ -3,7 +3,13 @@ import Link from 'next/link';
 import Breadcrumbs from '../components/breadcrumbs';
 import cx from 'classnames';
 
-export default function PageLayout({ slug, routeSelf, route1th, children }) {
+export default function PageLayout({
+  slug,
+  routeSelf,
+  route1th,
+  children,
+  routeNames,
+}) {
   const sidebarItems = route1th.children.map((route) => (
     <Link key={route.name} href={route.href}>
       <a
@@ -34,7 +40,7 @@ export default function PageLayout({ slug, routeSelf, route1th, children }) {
             <div className="text-xl">{routeSelf.name}</div>
             <div className="flex-1"></div>
             <div>
-              您的位置： <Breadcrumbs slug={slug} />
+              您的位置： <Breadcrumbs slug={slug} names={routeNames} />
             </div>
           </div>
           <div>{children}</div>

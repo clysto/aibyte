@@ -31,7 +31,7 @@ export default function Home() {
         slidesPerView={1}
         navigation
         pagination={{ clickable: true }}
-        className="h-screen"
+        style={{ height: '75vh' }}
         loop
       >
         {data.map((slide) => (

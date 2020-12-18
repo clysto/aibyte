@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import routes from '../_content/routes';
+import Image from 'next/image';
 
 export default function Layout({ children }) {
   const navItems = routes.map((route) => (
@@ -26,7 +27,9 @@ export default function Layout({ children }) {
       <h2 className="text-lg font-bold">{route.name}</h2>
       {route.children.map((childRoute) => (
         <Link key={childRoute.name} href={childRoute.href}>
-          <a className="text-sm text-gray-800 block">{childRoute.name}</a>
+          <a className="hover:text-green-700 text-sm text-gray-800 block">
+            {childRoute.name}
+          </a>
         </Link>
       ))}
     </div>
@@ -51,8 +54,18 @@ export default function Layout({ children }) {
         </div>
       </header>
       <main>{children}</main>
-      <footer className="bg-white border-t">
-        <div className="flex py-4 container mx-auto">{footerSections}</div>
+      <footer className="bg-white border-t border-b">
+        <div className="flex container mx-auto pt-6 pb-2">
+          <div className="flex ">{footerSections}</div>
+          <div className="flex-1"></div>
+          <div>
+            <Image src="/qrcode.svg" width={100} height={100}></Image>
+          </div>
+        </div>
+        <div className="text-center py-6 px-2 text-gray-600 text-sm leading-6">
+          <div>Copyright © 2017 南京农业大学 版权所有 All Rights Reserved</div>
+          <div>苏ICP备11055736号-3 苏公网安备32010202010029号</div>
+        </div>
       </footer>
     </div>
   );
