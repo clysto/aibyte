@@ -6,9 +6,10 @@ import SwiperCore, {
   Pagination,
   Scrollbar,
   EffectCoverflow,
+  Autoplay,
 } from 'swiper';
 
-SwiperCore.use([Navigation, Pagination, Scrollbar, EffectCoverflow]);
+SwiperCore.use([Navigation, Pagination, Scrollbar, EffectCoverflow, Autoplay]);
 
 import Layout from '../components/layout';
 

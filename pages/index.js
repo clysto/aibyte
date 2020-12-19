@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import style from '../styles/home.module.css';
+import SEO from '../components/seo';
 
 export default function Home() {
   const data = [
@@ -26,7 +26,9 @@ export default function Home() {
   ];
   return (
     <div>
+      <SEO title="主页 ｜ aibyte" description="aibyte" />
       <Swiper
+        autoplay
         spaceBetween={0}
         slidesPerView={1}
         navigation

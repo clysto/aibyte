@@ -5,8 +5,13 @@ import routes, {
 } from '../_content/routes';
 import PageLayout from '../components/page-layout';
 import HTMLContent from '../components/html-content';
-import { getPageContent, getAllArticles, getArticleContent } from '../lib/api';
-import { route } from 'next/dist/next-server/server/router';
+import {
+  getPageContent,
+  getAllArticles,
+  getArticleContent,
+  getAllArticlesLength,
+} from '../lib/api';
+import SEO from '../components/seo';
 
 const components = allComponents();
 
@@ -22,6 +27,7 @@ export default function Main(props) {
       slug={props.slug}
       routeNames={props.routeNames}
     >
+      <SEO title={props.routeSelf.name + ' | aibyte'} description="aibyte" />
       {Page ? (
         <Page {...props.componentProps} />
       ) : (
@@ -70,6 +76,11 @@ export async function getStaticProps({ params: { slug } }) {
   let innerHTML = null;
   let component = null;
   let componentProps = null;
+  let routeNames = [];
+
+  routeNames = slug.map((_, index) => {
+    return getRouteName(routes, slug.slice(0, index + 1));
+  });
 
   if (routeSelf.articles) {
     // 该页面为文章页面或文章索引页面
@@ -77,6 +88,11 @@ export async function getStaticProps({ params: { slug } }) {
       // 分页渲染
       const pageQuery = slug.length > 2 ? slug[2] : '1';
       const articleQuery = slug.length > 3 ? slug[3] : undefined;
+      //***************添页码路由名***************//
+      if (slug.length > 2) {
+        routeNames[2] = `第${pageQuery}页`;
+      }
+      //****************************************//
       if (articleQuery) {
         // 文章页面
         innerHTML = (await getArticleContent(routeSelf, articleQuery)).content;
@@ -87,10 +103,17 @@ export async function getStaticProps({ params: { slug } }) {
         const end = pageIndex * routeSelf.pageSize;
         component = routeSelf.component;
         const articles = getAllArticles(routeSelf, start, end);
+        const allArticlesLength = getAllArticlesLength(routeSelf);
         componentProps = {
           articles,
-          nextHref: '/' + routeSelf.slug.join('/') + '/' + (pageIndex + 1),
-          preHref: '/' + routeSelf.slug.join('/') + '/' + (pageIndex - 1),
+          nextHref:
+            end >= allArticlesLength
+              ? null
+              : '/' + routeSelf.slug.join('/') + '/' + (pageIndex + 1),
+          preHref:
+            pageIndex === 1
+              ? null
+              : '/' + routeSelf.slug.join('/') + '/' + (pageIndex - 1),
         };
       }
     } else {
@@ -127,10 +150,6 @@ export async function getStaticProps({ params: { slug } }) {
   //     innerHTML = await getPageContent(routeSelf.content);
   //   }
   // }
-
-  const routeNames = slug.map((_, index) => {
-    return getRouteName(routes, slug.slice(0, index + 1));
-  });
 
   return {
     props: {
