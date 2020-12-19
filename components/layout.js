@@ -59,7 +59,7 @@ export default function Layout({ children }) {
           <div className="flex ">{footerSections}</div>
           <div className="flex-1"></div>
           <div>
-            <Image src="/qrcode.svg" width={100} height={100}></Image>
+            <img src="/qrcode.svg" width={100} height={100}></img>
           </div>
         </div>
         <div className="text-center py-6 px-2 text-gray-600 text-sm leading-6 border-t border-gray-100">
